@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import modelo.ClaseConexion
+import modelo.dataClassProductos
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,12 @@ class MainActivity : AppCompatActivity() {
 
         rcvproductos.layoutManager=LinearLayoutManager(this)
 
-        //funcion para obtener datos 
+        //funcion para obtener datos
+        fun obtenerDatos():List<dataClassProductos>{
+            val objConexion=ClaseConexion().cadenaConexion()
+
+            val statement = objConexion?.createStatement()
+        }
 
     }
 }
