@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -48,6 +50,16 @@ class MainActivity : AppCompatActivity() {
                 addProducto.executeUpdate()
             }
         }
+
+        ////////////////////////////////mostrar datos ////////////////////////
+
+        val rcvproductos=findViewById<RecyclerView>(R.id.rcv_Productos)
+
+        //asignar un layout al reciledview
+
+        rcvproductos.layoutManager=LinearLayoutManager(this)
+
+        //funcion para obtener datos 
 
     }
 }
