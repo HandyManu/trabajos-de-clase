@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import modelo.ClaseConexion
 import modelo.dataClassProductos
+import java.util.UUID
 
 class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -40,6 +41,14 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
         Datos=listaDatos.toList()
         notifyItemRemoved(position)
         notifyDataSetChanged()
+
+    }
+      
+    fun actualizarProducto(nombreProducto: String , uuid:String){
+        //crear na co rrutinan
+        GlobalScope.launch(Dispatchers.IO){
+
+        }
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
