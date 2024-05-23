@@ -4,6 +4,7 @@ import Manuel.Ortega.crudmanuel2_a.R
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -43,10 +44,23 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
         notifyDataSetChanged()
 
     }
-      
+
     fun actualizarProducto(nombreProducto: String , uuid:String){
         //crear na co rrutinan
         GlobalScope.launch(Dispatchers.IO){
+            //creo un objeto de la clase conexion
+
+            val objConexion = ClaseConexion().cadenaConexion()
+
+            //variable que contenga prepared sttement
+            val updateProducto = objConexion?.prepareStatement("update tbproductos set NombreProducto = ? where uuid = ?")!!
+
+            updateProducto.setString(1,nombreProducto)
+            updateProducto.setString(2,uuid)
+            updateProducto.executeUpdate()
+
+            val commit = objConexion.prepareStatement("commit")
+            commit.executeUpdate()
 
         }
 
@@ -100,6 +114,30 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
             alertDialog.show()
 
+        }
+
+        holder.imgEditar.setOnClickListener {
+            val context=holder.itemView.context
+
+            //creo la alerta
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Editar nombre")
+
+            //agregar un cuadro de texto para que el usuario pueda escribir un nuevo nombre
+
+            val cuadritoNuevoNombre = EditText(context)
+            cuadritoNuevoNombre.setHint(item.NombreProducto)
+            builder.setView(cuadritoNuevoNombre)
+
+            builder.setPositiveButton("Actualizar"){
+                dialog,which->actualizarProducto(cuadritoNuevoNombre.text.toString(),item.uuid)
+            }
+
+            builder.setNegativeButton("cancelar"){
+                dialog,which->dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
 
     }
