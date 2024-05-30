@@ -72,7 +72,7 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
             commit.executeUpdate()
 
             withContext(Dispatchers.Main){
-                actualizarListaDespuesDeActualizarDatos(uuid,nombreProducto)
+                actualizarListaDespuesDeActualizarDatos(uuid,nombreProducto  )
             }
 
         }
@@ -151,6 +151,11 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
             }
             val dialog = builder.create()
             dialog.show()
+        }
+
+        //darle clic a la card
+        holder.itemView.setOnClickListener {
+
         }
 
     }
