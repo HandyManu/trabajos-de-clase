@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import modelo.ClaseConexion
 import modelo.dataClassProductos
 import java.util.UUID
@@ -20,6 +21,14 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
         notifyDataSetChanged()
     }
 
+    //funcion parar actualizar el reciler view cuando actualizo los datos
+
+    fun actualizarListaDespuesDeActualizarDatos(uuid: String,nuevoNombre:String){
+        val index=Datos.indexOfFirst { it.uuid==uuid }
+        Datos[index].NombreProducto=nuevoNombre
+        notifyItemChanged(index)
+
+    }
     fun eliminarRegistro(nombreProducto:String,position: Int){
 
         //quitar el elementpo de la lista
@@ -61,6 +70,10 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
             val commit = objConexion.prepareStatement("commit")
             commit.executeUpdate()
+
+            withContext(Dispatchers.Main){
+                actualizarListaDespuesDeActualizarDatos(uuid,nombreProducto)
+            }
 
         }
 
