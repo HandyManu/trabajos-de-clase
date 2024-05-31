@@ -1,7 +1,9 @@
 package RecyclerViewHelper
 
 import Manuel.Ortega.crudmanuel2_a.R
+import Manuel.Ortega.crudmanuel2_a.detalle_productos
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -155,6 +157,19 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
         //darle clic a la card
         holder.itemView.setOnClickListener {
+            //invoco el contexto
+            val context = holder.itemView.context
+
+            //cambiamos de pantalla
+            //abro pantalla detalle productos
+            val pantallaDetalles=Intent(context,detalle_productos::class.java)
+            //aqui antes de abrir la nueva pantalla le abro los parametros
+
+            pantallaDetalles.putExtra("uuid",item.uuid)
+            pantallaDetalles.putExtra("nombre",item.NombreProducto)
+            pantallaDetalles.putExtra("precio",item.precio)
+            pantallaDetalles.putExtra("cantidad",item.cantidad)
+            context.startActivity(pantallaDetalles)
 
         }
 
